@@ -1,3 +1,25 @@
+# Trabalho-final Terraform module
+
+Instructions to use the module and create `dev` / `prod` workspaces and remote state.
+
+1. Create the S3 bucket that will hold the states (example name used in `main.tf`):
+
+   aws s3 mb s3://fiap-platform-engineering-terraform-state --region us-east-1
+
+2. Initialize Terraform and create workspaces:
+
+   terraform init
+   terraform workspace new dev
+   terraform workspace new prod
+
+3. Switch to a workspace and apply (example for dev):
+
+   terraform workspace select dev
+   terraform apply -var='instance_count=2' -auto-approve
+
+Notes:
+- The module uses `terraform.workspace` to prefix instance names, ELB and security group names (e.g., nginx-dev-001).
+- Backend S3 key is set to `trabalho-final/${terraform.workspace}.tfstate` so each workspace has its own state file.
 # Exercicio Terraform
 
 Utilize o código da demo Count e faça as seguintes mudanças:
